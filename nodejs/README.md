@@ -1,15 +1,20 @@
 Role: nodejs
 =========
 
-This role is for MacOS Homebrew users that wish to install npm global packages without resorting to the use of sudo
+Purpose
+--------
+This role is for MacOS Homebrew users that wish to install npm global packages without resorting to the use of sudo.
+
 When node is installed via Homebrew, and `npm install` is run with `-g` flag, it installs the requested packages in 
-the default directory of `/usr/local/lib/node_modules`.  This directory requires root privileges for write and will
-inevitably result in permissions being changed on files that will cause errors and conflict with Homebrew's semantics
+the default directory of `/usr/local/lib/node_modules`.  
+
+This directory requires root privileges for write and will inevitably result in permissions being changed on files that 
+will cause errors and conflict with Homebrew's semantics.
 
 This role will install Node via Homebrew without NPM, and install the latest NPM separately into a configurable 
-directory (*defaults to the user's home*)
+directory (*defaults to the user's home*).
 
-It will set up all environment variables for Node and Npm binarys so that things go neatly into this new home
+It will set up all environment variables for Node and Npm binarys so that things go neatly into this new home.
 
 
 Requirements
