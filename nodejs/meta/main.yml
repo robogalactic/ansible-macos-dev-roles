@@ -1,0 +1,12 @@
+galaxy_info:
+  author: caucazius@robogalactic.com
+  description:
+  company: Robogalctic
+  license: license (BSD)
+
+  min_ansible_version: 1.2
+
+
+  galaxy_tags: [osx]
+
+dependencies: []
