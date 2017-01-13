@@ -1,0 +1,8 @@
+---
+# tasks file for nodejs
+
+- include: tasks/install.yml
+  when: action == 'install'
+
+- include: tasks/setup.yml
+  when: installed.changed == True

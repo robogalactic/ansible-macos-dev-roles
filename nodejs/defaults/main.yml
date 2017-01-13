@@ -1,0 +1,5 @@
+---
+# defaults file for nodejs
+home:             "{{ lookup('env','HOME') }}"
+npm_dir:          "{{ home }}/.npm-packages"
+node_path:        "{{ npm_dir }}/lib/node_modules"

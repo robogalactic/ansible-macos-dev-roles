@@ -1,0 +1,9 @@
+---
+
+- name: Install Homebrew Node without npm
+  homebrew:
+    name: node
+    state: present
+    install_options: without-npm
+  when: ansible_distribution == 'MacOSX'
+  register: installed

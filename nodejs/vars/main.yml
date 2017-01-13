@@ -1,0 +1,5 @@
+---
+# vars file for nodejs
+
+user:
+npm_dir: "${HOME}/.npm-packages"

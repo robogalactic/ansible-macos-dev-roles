@@ -1,0 +1,51 @@
+---
+
+- name: Create a directory for global NPM packages
+  file:
+    path:     '{{ npm_dir }}'
+    state:    directory
+    mode:     0755
+
+- name: Indicate in ~/.npmrc file where to globally install packages
+  lineinfile:
+    dest:     "{{ home }}/.npmrc"
+    regexp:   '^prefix=.*$'
+    line:     "prefix={{ npm_dir }}"
+    create:   true
+
+- name: Add the global NPM path to ~/.bashrc to ensure node will find installed modules
+  lineinfile:
+    dest:     "{{ home }}/.bashrc"
+    state:    present
+    backrefs: yes
+    regexp:   '^NODE_PATH="?({{ node_path }}:?)?(.*)"?$'
+    line:     'NODE_PATH="{{ node_path }}:${NODE_PATH}"'
+    create:   true
+
+- name: Check whether .bashrc contains PATH
+  command: "grep -Fxq 'PATH=' {{ home }}/.bashrc"
+  register: checkpath
+  ignore_errors: True
+  changed_when: False
+
+- name: Create the PATH environment variable with the NPM binary in .bashrc
+  lineinfile:
+    dest:     "{{ home }}/.bashrc"
+    state:    present
+    regexp:   '^PATH='
+    line:     'PATH="{{ npm_dir }}/bin:${PATH}"'
+  when: not checkpath.rc == 0
+
+- name: Add the NPM binary path to the PATH environment variable in .bashrc
+  lineinfile:
+    dest:     "{{ home }}/.bashrc"
+    state:    present
+    backrefs: yes
+    regexp:   '^PATH="?({{ npm_dir }}\/bin:?)?(.*)"?$'
+    line:     'PATH="{{ npm_dir }}/bin:\2"'
+  when: checkpath.rc == 0
+
+- name: Install the latest NPM
+  shell: curl -L https://www.npmjs.org/install.sh | sh
+  args:
+    creates: "{{ npm_dir }}/bin/npm"
